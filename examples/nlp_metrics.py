@@ -10,7 +10,6 @@ def wer(reference, hypothesis):
         word_1=words_reference,
         word_2=words_hypothesis
     )
-    solver.run()
     distance = solver.subproblem_map[-1, -1]
     score = distance / len(words_reference)
     return score
@@ -21,7 +20,6 @@ def cer(reference, hypothesis):
         word_1=reference, 
         word_2=hypothesis
         )
-    solver.run()
     distance = solver.subproblem_map[-1, -1]
     score = distance / len(reference)
     return score

@@ -19,7 +19,7 @@ The ./data folder contains two files - **dictionary.json** and **bigrams_diction
 A High Wind in Jamaica, Deirdre Wed and Other Poems, Essays Towards the History of Painting, The Victim and The Worm, and Poems available in [Gutenberg](https://www.gutenberg.org/). It was structured as a dictionary of dictionaries that show the frequencies of all possible bigrams.
 
 
-## Usage
+# Usage
 Use the code written in app.py to launch user-friendly app.
 
 ```python

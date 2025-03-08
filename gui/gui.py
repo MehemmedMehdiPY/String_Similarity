@@ -1,7 +1,6 @@
-import json
 from .constants import SPECIAL_CHARS, DICTIONARY_PATH, BIGRAM_PATH
 from PyQt5.QtWidgets import (
-    QMainWindow, QPushButton, QLabel, QMessageBox, QVBoxLayout, QHBoxLayout, 
+    QMainWindow, QLabel, QMessageBox, QVBoxLayout, QHBoxLayout, 
     QWidget, QListWidget, QListWidgetItem, QAbstractItemView, QLineEdit)
 import sys
 sys.path.append("../")
@@ -24,8 +23,10 @@ class MainWindow(QMainWindow, Customization):
     def __init__(self):
         super().__init__()
         
-        self.corrector = AutoCorrection(dict_path=self.dict_path, bigram_path=self.bigram_path,
-                                        solver=Levenshtein())
+        self.corrector = AutoCorrection(
+            dict_path=self.dict_path,
+            bigram_path=self.bigram_path,
+            solver=Levenshtein())
         
         self.setWindowTitle("Auto Correction")
         self.setGeometry(700, 200, 400, 600)
@@ -112,7 +113,7 @@ class MainWindow(QMainWindow, Customization):
         
         solver = self.features[0].algorithms[idx]()
         self.corrector = AutoCorrection(
-            dict_path=self.dict_path, 
+            dict_path=self.dict_path,
             bigram_path=self.bigram_path,
             solver=solver)
     

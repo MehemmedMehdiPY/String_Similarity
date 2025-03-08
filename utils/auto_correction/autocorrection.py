@@ -71,6 +71,13 @@ class AutoCorrection:
         return dictionary
     
     def search_bigrams(self, word_1: str, word_2: str) -> int:
+        """
+        Searching for bigrams
+
+        Returns:
+                    Frequency of a bigram or 
+                    0 if no bigram found in dictionary.
+        """
         key_1 = word_1[0] + word_2[0]
         if key_1 in self.bigram:
             key_2 = "{} {}".format(word_1, word_2)

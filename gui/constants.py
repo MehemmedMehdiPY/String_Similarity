@@ -16,3 +16,15 @@ SPECIAL_CHARS.remove("'")
 
 DICTIONARY_PATH = "./data/dictionary.json"
 BIGRAM_PATH = "./data/bigram_dictionary.json"
+
+
+import sys
+sys.path.append("../")
+from utils.edit_distance import DamerauLevenshtein, Levenshtein
+
+class EditDistance:
+    choices = ["DamerauLevenshtein", "Levenshtein"]
+    algorithms = [DamerauLevenshtein, Levenshtein]
+    
+class Customization:
+    features = [EditDistance]

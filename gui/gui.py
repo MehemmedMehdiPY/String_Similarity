@@ -29,7 +29,7 @@ class MainWindow(QMainWindow, Customization):
         self.setGeometry(700, 200, 400, 600)
 
         # Input box for the user to write down
-        self.input_line = QLineEdit()
+        self.input_line = QLineEdit(" ")
         self.input_line.textEdited.connect(self.text_update)
         
         #  Choosing solver (edit distance) algorithm
@@ -115,6 +115,7 @@ class MainWindow(QMainWindow, Customization):
             fixing typos, and showing it as output text.
         """
         input_text = self.input_line.text()
+        output_text = self.output_text.text()
         if len(input_text) == 0: return
         if input_text[-1] != " ":
             self.is_last_char_space = False
@@ -122,17 +123,21 @@ class MainWindow(QMainWindow, Customization):
         if self.is_last_char_space and input_text[-1] == " ": return
         
         input_text_spliit = input_text.split()
+        output_text_split = output_text.split()
         if len(input_text_spliit) == 0: return
         
         input_text = input_text_spliit[-1]
         input_text = self.remove_special_chars(input_text)
         input_text = self.fix_typo_if_necessary(word=input_text)
 
-        input_text_spliit[-1] = input_text
-        input_text = " ".join(input_text_spliit)
+        if len(output_text_split) % 4 == 0:
+            input_text = input_text + "\n"
+                    
+        output_text_split.append(input_text)        
+        output_text = " ".join(output_text_split)
         
         self.output_text.setText(
-            input_text
+            output_text
         )
         
         self.is_last_char_space = True

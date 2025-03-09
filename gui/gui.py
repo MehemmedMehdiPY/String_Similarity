@@ -21,9 +21,9 @@ class MainWindow(QMainWindow, Customization):
             dict_path=self.dict_path,
             bigram_path=self.bigram_path,
 
-            # Initializing Levenshtein algorithm
+            # Initializing Damerau-Levenshtein algorithm
             solver=self.features[0].\
-                        algorithms[1]()
+                        algorithms[0]()
             )
         
         self.setWindowTitle("Auto Correction")
@@ -62,6 +62,16 @@ class MainWindow(QMainWindow, Customization):
         widget.setLayout(layout_final)
         return widget
 
+    def __create_selection(self, idx) -> QListWidget:
+        """
+            Creating a section for the selection of algorithms.
+        """
+        selection = QListWidget()
+        selection.setSelectionMode(QAbstractItemView.NoSelection)
+        selection.setGeometry(700, 900, 100, 200)
+        self.__upload_items(selection, idx)
+        return selection
+
     def __upload_items(self, selection, idx) -> None:
         """
             Uploading algorithm names, such as Levenshtein and DamerauLevenshtein
@@ -70,16 +80,6 @@ class MainWindow(QMainWindow, Customization):
         for choice in self.features[idx].choices:
             item = QListWidgetItem(str(choice))
             selection.addItem(item)
-
-    def __create_selection(self, idx) -> QListWidget:
-        """
-            Creating selection section for algorithms.
-        """
-        selection = QListWidget()
-        selection.setSelectionMode(QAbstractItemView.NoSelection)
-        selection.setGeometry(700, 900, 100, 200)
-        self.__upload_items(selection, idx)
-        return selection
 
     def algorithm_triggered(self) -> None:
         idx = self.algorithm.currentRow()
@@ -125,6 +125,7 @@ class MainWindow(QMainWindow, Customization):
         
         input_text_spliit = input_text.split()
         output_text_split = output_text.split()
+        
         if len(input_text_spliit) == 0: return
         if len(input_text_spliit) == 1 < len(output_text_split):
             output_text_split = []

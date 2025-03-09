@@ -2,6 +2,13 @@ import numpy as np
 from .frameworks import Distance, ScoredDistance
         
 class Dumbest():
+    """
+    An algorithm proposed by the author of this repo to use as an explanation 
+    of distance measurements in a dumbest way possible. Later, issues with the algorithm
+    can be analyzed, combined with the potential solutions to mitigate them.
+
+    No more details as a reference since it is just the production of the author.
+    """
     def __init__(self):
         pass
     
@@ -25,6 +32,14 @@ class Dumbest():
             self.word_1_len, self.word_2_len = self.word_2_len, self.word_1_len
 
 class DamerauLevenshtein(Distance):
+    """
+    Damerau-Levenshtein algorithm employs 4 operations - insert, delete, replace, and transpose
+    to determine the edit distance between two strings.
+
+    The recursive matrix approach is used by self.step method.
+
+    For more details --> https://en.wikipedia.org/wiki/Damerau%E2%80%93Levenshtein_distance
+    """
     def __init__(self):
         pass
 
@@ -64,6 +79,12 @@ class DamerauLevenshtein(Distance):
         self.subproblem_map[:, 0] = np.arange(0, self.height)
 
 class Hamming(Distance):
+    """
+    Hamming distance is the simplest approach that employs only replace operations
+    to determine similarity between two strings of the equal lengths. 
+
+    For more details --> https://en.wikipedia.org/wiki/Hamming_distance
+    """
     def __init__(self):
         pass
 
@@ -94,8 +115,14 @@ class Hamming(Distance):
         self.subproblem_map = np.zeros((1, self.dimension)).astype(np.uint8)
 
 class Jaro(ScoredDistance):
-    """The following code may have some similarities with https://rosettacode.org/wiki/Jaro_similarity#Python
-    I tried to implement my understanding.
+    """
+    Jaro is a scoring technique to evaluate the similarity between two strings between 0 and 1, 
+    where 0 indicates absolute no similarity, while 1 is a perfect match.
+
+    The algorithm counts common characters of two strings, combined with the number of transpositions 
+    needed to fix the character position in a word for matching.
+    
+    For more details --> https://rosettacode.org/wiki/Jaro_similarity
     """
     def __init__(self):
         pass
@@ -162,6 +189,17 @@ class Jaro(ScoredDistance):
         self.match_range = self.word_2_len // 2 - 1
         
 class NeedlemandWunsch(Distance):
+    """
+    Needleman-Wunsch algorithm is a scoring technique to determine
+    if two sequences have similarities. Most commonly used in bioinformatics
+    as a global alignment technique between DNA sequences.
+    Unlike traditional edit distance measurements, the algorithm finds the path 
+    that maximisizes the score, instead of minimizing the distance.
+
+    The recursive matrix approach is used by self.step method.
+
+    For more details --> https://en.wikipedia.org/wiki/Needleman%E2%80%93Wunsch_algorithm
+    """
     def __init__(self, match_score: int = 1, mismatch_score: int = -1, gap_penalty: int = -1):
         self.match_score = match_score
         self.mismatch_score = mismatch_score
@@ -197,6 +235,14 @@ class NeedlemandWunsch(Distance):
         self.subproblem_map[:, 0] = -np.arange(0, self.height)
 
 class Levenshtein(Distance):
+    """
+    Levenshtein algorithm employs 3 operations - insert, delete, and replace
+    to determine the edit distance between two strings.
+
+    The recursive matrix approach is used by self.step method.
+
+    For more details --> https://en.wikipedia.org/wiki/Levenshtein_distance
+    """
     def __init__(self):
         pass
 

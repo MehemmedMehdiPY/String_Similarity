@@ -188,7 +188,7 @@ class Jaro(ScoredDistance):
 
         self.match_range = self.word_2_len // 2 - 1
         
-class NeedlemandWunsch(Distance):
+class NeedlemanWunsch(Distance):
     """
     Needleman-Wunsch algorithm is a scoring technique to determine
     if two sequences have similarities. Most commonly used in bioinformatics

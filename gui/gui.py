@@ -1,6 +1,7 @@
+from typing import Tuple
 from .constants import SPECIAL_CHARS, DICTIONARY_PATH, BIGRAM_PATH, Customization
 from PyQt5.QtWidgets import (
-    QMainWindow, QLabel, QMessageBox, QVBoxLayout, QHBoxLayout, 
+    QMainWindow, QLabel, QVBoxLayout, QHBoxLayout, 
     QWidget, QListWidget, QListWidgetItem, QAbstractItemView, QLineEdit)
 import sys
 sys.path.append("../")
@@ -47,13 +48,13 @@ class MainWindow(QMainWindow, Customization):
         
         self.setCentralWidget(widget)
 
-    def __construct_layout(self, *args):
+    def __construct_layout(self, *args) -> QVBoxLayout:
         layout_right = QVBoxLayout()
         for arg in args:
             layout_right.addWidget(arg)
         return layout_right
     
-    def __construct_widget(self, *args):
+    def __construct_widget(self, *args) -> QWidget:
         layout_final = QHBoxLayout()
         for arg in args:
             layout_final.addLayout(arg)
@@ -61,7 +62,7 @@ class MainWindow(QMainWindow, Customization):
         widget.setLayout(layout_final)
         return widget
 
-    def __upload_items(self, selection, idx):
+    def __upload_items(self, selection, idx) -> None:
         """
             Uploading algorithm names, such as Levenshtein and DamerauLevenshtein
             to selection section.
@@ -70,7 +71,7 @@ class MainWindow(QMainWindow, Customization):
             item = QListWidgetItem(str(choice))
             selection.addItem(item)
 
-    def __create_selection(self, idx):
+    def __create_selection(self, idx) -> QListWidget:
         """
             Creating selection section for algorithms.
         """
@@ -80,7 +81,7 @@ class MainWindow(QMainWindow, Customization):
         self.__upload_items(selection, idx)
         return selection
 
-    def algorithm_triggered(self):
+    def algorithm_triggered(self) -> None:
         idx = self.algorithm.currentRow()
         if idx != -1:
             self.algorithm_selected = True
@@ -91,7 +92,7 @@ class MainWindow(QMainWindow, Customization):
             bigram_path=self.bigram_path,
             solver=solver)
     
-    def detect_typo(self, word: str, word_prev: str = None):
+    def detect_typo(self, word: str, word_prev: str = None) -> Tuple[str, bool]:
         """Detecting typos and returning alternative word."""
         if word_prev is None:
             word_fixed, _ = self.corrector(word)
@@ -99,17 +100,17 @@ class MainWindow(QMainWindow, Customization):
             word_fixed, _ = self.corrector(word_prev, word)
         return word_fixed, word==word_fixed
     
-    def fix_typo_if_necessary(self, word : str, word_prev: str = None):
+    def fix_typo_if_necessary(self, word : str, word_prev: str = None) -> str:
         word_fixed, flag =  self.detect_typo(word=word, word_prev=word_prev)
         if flag:
             return word
         else:
             return word_fixed 
 
-    def remove_special_chars(self, word):
+    def remove_special_chars(self, word) -> str:
         return word.translate({ord(char): None for char in SPECIAL_CHARS})
 
-    def text_update(self):
+    def text_update(self) -> None:
         """
             Updating the input text by removing special characters, 
             fixing typos, and showing it as output text.

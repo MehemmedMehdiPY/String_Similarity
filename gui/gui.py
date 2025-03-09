@@ -99,8 +99,8 @@ class MainWindow(QMainWindow, Customization):
             word_fixed, _ = self.corrector(word_prev, word)
         return word_fixed, word==word_fixed
     
-    def fix_typo_if_necessary(self, word):
-        word_fixed, flag =  self.detect_typo(word)
+    def fix_typo_if_necessary(self, word : str, word_prev: str = None):
+        word_fixed, flag =  self.detect_typo(word=word, word_prev=word_prev)
         if flag:
             return word
         else:
@@ -125,10 +125,16 @@ class MainWindow(QMainWindow, Customization):
         input_text_spliit = input_text.split()
         output_text_split = output_text.split()
         if len(input_text_spliit) == 0: return
+        if len(input_text_spliit) == 1 < len(output_text_split):
+            output_text_split = []
         
+        word_prev = None
+        if len(output_text_split) > 1:
+            word_prev = output_text_split[-2]
+
         input_text = input_text_spliit[-1]
         input_text = self.remove_special_chars(input_text)
-        input_text = self.fix_typo_if_necessary(word=input_text)
+        input_text = self.fix_typo_if_necessary(word=input_text, word_prev=word_prev)
 
         if len(output_text_split) % 4 == 0:
             input_text = input_text + "\n"

@@ -67,7 +67,11 @@ class Hamming(Distance):
     def __init__(self):
         pass
 
-    def check_lengths(self, word_1, word_2):
+    def check_lengths(self, word_1: str, word_2: str) -> None:
+        """
+        If not equal lengths, 
+        no further computation will be issued.
+        """
         if len(word_1) != len(word_2):
             raise ValueError("word_1 {} and word_2 {} have no equal lengths".format(word_1, word_2))
 
@@ -81,7 +85,9 @@ class Hamming(Distance):
         )
     
     def update_words(self, word_1, word_2):
+        # Checking lengths of words.
         self.check_lengths(word_1, word_2)
+
         self.word_1 = word_1
         self.word_2 = word_2
         self.dimension = len(word_1) + 1
@@ -221,7 +227,7 @@ class Levenshtein(Distance):
 if __name__ == "__main__":
     word_1 = "potlte"
     word_2 = "bottle"
-    solver = Levenshtein()
+    solver = Hamming()
     # solver = DamerauLevenshtein()
     print(solver(word_1, word_2))
     print(solver.subproblem_map)
